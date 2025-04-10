@@ -58,6 +58,15 @@
   @apply animate-terminal-blink;
 }
 
+@keyframes terminal-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 .typed-text {
   @apply overflow-hidden whitespace-nowrap border-r-4 border-terminal-success pr-1;
   animation: typing 3s steps(40, end), terminal-blink 0.75s step-end infinite;

@@ -1,19 +1,14 @@
-
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Briefcase, GraduationCap, Mail } from "lucide-react";
 import { useSound } from './SoundContext';
-
 const ProfileSidebar: React.FC = () => {
-  const { playHover } = useSound();
-  
-  return (
-    <div className="fixed left-0 top-0 h-full bg-card border-r border-border w-64 p-6 hidden lg:block">
+  const {
+    playHover
+  } = useSound();
+  return <div className="fixed left-0 top-0 h-full bg-card border-r border-border w-64 p-6 hidden lg:block rounded-full">
       <div className="flex flex-col items-center mb-8">
-        <div 
-          className="mb-4 rounded-full overflow-hidden avatar-glow"
-          onMouseEnter={playHover}
-        >
+        <div className="mb-4 rounded-full overflow-hidden avatar-glow" onMouseEnter={playHover}>
           <Avatar className="w-32 h-32">
             <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt="DevOps Engineer" />
             <AvatarFallback>DE</AvatarFallback>
@@ -70,8 +65,6 @@ const ProfileSidebar: React.FC = () => {
           © {new Date().getFullYear()} DevOps Portfolio
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ProfileSidebar;

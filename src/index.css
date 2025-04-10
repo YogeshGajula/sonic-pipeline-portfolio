@@ -36,6 +36,19 @@
     --ring: 224 71% 4%;
     
     --radius: 0.5rem;
+
+    /* Sidebar specific colors */
+    --sidebar: 223 47% 11%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-border: 222 47% 20%;
+    --sidebar-accent: 210 40% 30%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-ring: 224 71% 4%;
+    --terminal-dark: 220 40% 13%;
+    --terminal-light: 220 40% 30%;
+    --terminal-success: 142 70% 45%;
+    --terminal-warning: 40 90% 60%;
+    --terminal-error: 0 90% 60%;
   }
 }
 
@@ -86,4 +99,29 @@
 
 .pipeline-node {
   @apply cursor-pointer rounded-md transition-transform duration-300 ease-in-out transform hover:scale-110;
+}
+
+@keyframes avatar-glow {
+  0% {
+    box-shadow: 0 0 5px 2px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 5px 2px rgba(59, 130, 246, 0.5);
+  }
+}
+
+.avatar-glow {
+  animation: avatar-glow 3s infinite;
+}
+
+@keyframes terminal-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

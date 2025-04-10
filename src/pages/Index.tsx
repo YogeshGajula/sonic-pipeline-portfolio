@@ -9,6 +9,8 @@ import SkillBar from "@/components/SkillBar";
 import Terminal from "@/components/Terminal";
 import ContactForm from "@/components/ContactForm";
 import { useSound } from "@/components/SoundContext";
+import ProfileSidebar from "@/components/ProfileSidebar";
+import Education from "@/components/Education";
 
 // Intersection Observer Hook
 const useElementOnScreen = (options: IntersectionObserverInit) => {
@@ -141,9 +143,10 @@ const Main = () => {
 
   return (
     <div className="relative">
+      <ProfileSidebar />
       <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
       
-      <main className="container mx-auto px-4 pt-16">
+      <main className="container mx-auto px-4 pt-16 lg:pl-72">
         <Section 
           id="home" 
           onVisible={() => setActiveSection("home")}
@@ -247,6 +250,13 @@ const Main = () => {
               </div>
             </div>
           </div>
+        </Section>
+
+        <Section 
+          id="education" 
+          onVisible={() => setActiveSection("education")}
+        >
+          <Education />
         </Section>
 
         <Section 
@@ -400,7 +410,7 @@ const Main = () => {
         </Section>
       </main>
       
-      <footer className="bg-card border-t border-border py-8">
+      <footer className="bg-card border-t border-border py-8 lg:ml-64">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-muted-foreground text-sm mb-4 md:mb-0">
@@ -418,6 +428,17 @@ const Main = () => {
                 }}
               >
                 Home
+              </a>
+              <a 
+                href="#education" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                onMouseEnter={playHover}
+                onClick={() => {
+                  playClick();
+                  setActiveSection("education");
+                }}
+              >
+                Education
               </a>
               <a 
                 href="#projects" 

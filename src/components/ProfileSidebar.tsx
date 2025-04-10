@@ -6,7 +6,7 @@ const ProfileSidebar: React.FC = () => {
   const {
     playHover
   } = useSound();
-  return <div className="fixed left-0 top-0 h-full bg-card border-r border-border w-80 p-6 hidden lg:block rounded py-[27px]">
+  return <div className="fixed left-0 top-0 h-full bg-card border-r border-border w-64 p-6 hidden lg:block rounded-full">
       <div className="flex flex-col items-center mb-8">
         <div className="mb-4 rounded-full overflow-hidden avatar-glow" onMouseEnter={playHover}>
           <Avatar className="w-32 h-32">

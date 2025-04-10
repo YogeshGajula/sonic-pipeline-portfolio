@@ -10,7 +10,7 @@ const ProfileSidebar: React.FC = () => {
   } = useSound();
   
   return <div className="fixed left-0 top-0 h-full bg-card border-r border-border w-64 p-6 hidden lg:block rounded">
-      <div className="flex flex-col items-center mb-8 pt-16">
+      <div className="flex flex-col items-center mb-8 pt-24">
         <div className="mb-4 rounded-full overflow-hidden avatar-glow" onMouseEnter={playHover}>
           <Avatar className="w-32 h-32">
             <AvatarImage src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" alt="DevOps Engineer" />

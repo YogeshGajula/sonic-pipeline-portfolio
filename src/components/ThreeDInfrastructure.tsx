@@ -66,9 +66,10 @@ const Connection: React.FC<{
   }, [points]);
   
   return (
-    <line geometry={lineGeometry}>
-      <lineBasicMaterial attach="material" color="white" opacity={0.4} transparent />
-    </line>
+    <primitive object={new THREE.Line(
+      lineGeometry,
+      new THREE.LineBasicMaterial({ color: "white", opacity: 0.4, transparent: true })
+    )} />
   );
 };
 

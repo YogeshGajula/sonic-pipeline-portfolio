@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ArrowRight, Terminal as TerminalIcon, Github, Twitter, Linkedin, Mail } from "lucide-react";
 import { SoundProvider } from "@/components/SoundContext";
 import Navigation from "@/components/Navigation";
@@ -40,7 +40,7 @@ const Section: React.FC<{
   children: React.ReactNode;
   onVisible?: () => void;
 }> = ({ id, className, children, onVisible }) => {
-  const [ref, isVisible] = useElementOnScreen({
+  const [setRef, isVisible] = useElementOnScreen({
     rootMargin: "-20% 0px",
     threshold: 0.3,
   });
@@ -54,7 +54,8 @@ const Section: React.FC<{
   return (
     <section
       id={id}
-      ref={ref as React.RefObject<HTMLElement>}
+      // Use a type assertion to adapt the setRef to the expected RefObject format
+      ref={(el) => setRef(el as HTMLElement)}
       className={`min-h-screen py-20 ${className || ""}`}
     >
       {children}

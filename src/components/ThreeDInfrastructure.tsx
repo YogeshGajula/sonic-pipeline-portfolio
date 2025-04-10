@@ -1,7 +1,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF, Text, Box } from '@react-three/drei';
+import { OrbitControls, Box, Text } from '@react-three/drei';
 import { useSound } from './SoundContext';
 import * as THREE from 'three';
 
@@ -48,13 +48,26 @@ const Node: React.FC<{
   );
 };
 
-const Connection: React.FC<{ start: [number, number, number]; end: [number, number, number]; }> = ({ start, end }) => {
-  const points = [new THREE.Vector3(...start), new THREE.Vector3(...end)];
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+const Connection: React.FC<{ 
+  start: [number, number, number]; 
+  end: [number, number, number]; 
+}> = ({ start, end }) => {
+  const points = [
+    new THREE.Vector3(...start), 
+    new THREE.Vector3(...end)
+  ];
   
   return (
-    <line geometry={lineGeometry}>
-      <lineBasicMaterial color="white" opacity={0.4} transparent />
+    <line>
+      <bufferGeometry attach="geometry">
+        <bufferAttribute
+          attach="attributes-position"
+          count={points.length}
+          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <lineBasicMaterial attach="material" color="white" opacity={0.4} transparent />
     </line>
   );
 };
@@ -64,29 +77,29 @@ const CIPipeline: React.FC = () => {
   const [activeNode, setActiveNode] = useState<string | null>(null);
   
   const nodes = [
-    { name: 'Code', position: [-4, 1, 0], color: '#22a7f0' },
-    { name: 'Build', position: [-2, 1, 0], color: '#f3a935' },
-    { name: 'Test', position: [0, 1, 0], color: '#b3c4d4' },
-    { name: 'Deploy', position: [2, 1, 0], color: '#2ecc71' },
-    { name: 'Monitor', position: [4, 1, 0], color: '#9b59b6' },
+    { name: 'Code', position: [-4, 1, 0] as [number, number, number], color: '#22a7f0' },
+    { name: 'Build', position: [-2, 1, 0] as [number, number, number], color: '#f3a935' },
+    { name: 'Test', position: [0, 1, 0] as [number, number, number], color: '#b3c4d4' },
+    { name: 'Deploy', position: [2, 1, 0] as [number, number, number], color: '#2ecc71' },
+    { name: 'Monitor', position: [4, 1, 0] as [number, number, number], color: '#9b59b6' },
     
-    { name: 'Docker', position: [-3, -1, 0], color: '#34b4eb' },
-    { name: 'Kubernetes', position: [-1, -1, 0], color: '#3970e4' },
-    { name: 'Terraform', position: [1, -1, 0], color: '#7B42BC' },
-    { name: 'AWS', position: [3, -1, 0], color: '#FF9900' },
+    { name: 'Docker', position: [-3, -1, 0] as [number, number, number], color: '#34b4eb' },
+    { name: 'Kubernetes', position: [-1, -1, 0] as [number, number, number], color: '#3970e4' },
+    { name: 'Terraform', position: [1, -1, 0] as [number, number, number], color: '#7B42BC' },
+    { name: 'AWS', position: [3, -1, 0] as [number, number, number], color: '#FF9900' },
   ];
 
   const connections = [
-    { start: [-4, 1, 0], end: [-2, 1, 0] },
-    { start: [-2, 1, 0], end: [0, 1, 0] },
-    { start: [0, 1, 0], end: [2, 1, 0] },
-    { start: [2, 1, 0], end: [4, 1, 0] },
-    { start: [-3, -1, 0], end: [-1, -1, 0] },
-    { start: [-1, -1, 0], end: [1, -1, 0] },
-    { start: [1, -1, 0], end: [3, -1, 0] },
-    { start: [-3, -1, 0], end: [-2, 1, 0] },
-    { start: [-1, -1, 0], end: [0, 1, 0] },
-    { start: [1, -1, 0], end: [2, 1, 0] },
+    { start: [-4, 1, 0] as [number, number, number], end: [-2, 1, 0] as [number, number, number] },
+    { start: [-2, 1, 0] as [number, number, number], end: [0, 1, 0] as [number, number, number] },
+    { start: [0, 1, 0] as [number, number, number], end: [2, 1, 0] as [number, number, number] },
+    { start: [2, 1, 0] as [number, number, number], end: [4, 1, 0] as [number, number, number] },
+    { start: [-3, -1, 0] as [number, number, number], end: [-1, -1, 0] as [number, number, number] },
+    { start: [-1, -1, 0] as [number, number, number], end: [1, -1, 0] as [number, number, number] },
+    { start: [1, -1, 0] as [number, number, number], end: [3, -1, 0] as [number, number, number] },
+    { start: [-3, -1, 0] as [number, number, number], end: [-2, 1, 0] as [number, number, number] },
+    { start: [-1, -1, 0] as [number, number, number], end: [0, 1, 0] as [number, number, number] },
+    { start: [1, -1, 0] as [number, number, number], end: [2, 1, 0] as [number, number, number] },
   ];
 
   const handleNodeClick = (nodeName: string) => {

@@ -1,10 +1,11 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Box, Text } from '@react-three/drei';
+import { OrbitControls, Text } from '@react-three/drei';
 import { useSound } from './SoundContext';
 import * as THREE from 'three';
 
+// Node component with proper typings
 const Node: React.FC<{
   position: [number, number, number];
   name: string;
@@ -16,8 +17,7 @@ const Node: React.FC<{
   
   return (
     <group position={position}>
-      <Box 
-        args={[1, 0.5, 0.5]} 
+      <mesh
         onPointerOver={(e) => {
           e.stopPropagation();
           setHovered(true);
@@ -29,12 +29,13 @@ const Node: React.FC<{
           if (onClick) onClick();
         }}
       >
+        <boxGeometry args={[1, 0.5, 0.5]} />
         <meshStandardMaterial 
           color={hovered ? 'white' : color}
           emissive={color}
           emissiveIntensity={hovered ? 0.5 : 0.2}
         />
-      </Box>
+      </mesh>
       <Text
         position={[0, -0.5, 0]}
         fontSize={0.2}
@@ -48,6 +49,7 @@ const Node: React.FC<{
   );
 };
 
+// Connection component with proper typings
 const Connection: React.FC<{ 
   start: [number, number, number]; 
   end: [number, number, number]; 
@@ -57,21 +59,20 @@ const Connection: React.FC<{
     new THREE.Vector3(...end)
   ];
   
+  const lineGeometry = React.useMemo(() => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setFromPoints(points);
+    return geometry;
+  }, [points]);
+  
   return (
-    <line>
-      <bufferGeometry attach="geometry">
-        <bufferAttribute
-          attach="attributes-position"
-          count={points.length}
-          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
-          itemSize={3}
-        />
-      </bufferGeometry>
+    <line geometry={lineGeometry}>
       <lineBasicMaterial attach="material" color="white" opacity={0.4} transparent />
     </line>
   );
 };
 
+// Main CI Pipeline component
 const CIPipeline: React.FC = () => {
   const { playHover, playClick, playSuccess } = useSound();
   const [activeNode, setActiveNode] = useState<string | null>(null);
